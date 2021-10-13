@@ -3,3 +3,15 @@ version: "3.9"
 networks:
   studycleanarchitecture-net:
     driver: bridge
+
+services:
+  pessoa-db:
+    image: postgres:12-alpine
+    environment:
+      POSTGRES_PASSWORD: "admin"
+      POSTGRES_USER: "admin"
+      POSTGRES_DB: "pessoa"
+    ports:
+      - "5432:5432"
+    networks:
+      - studycleanarchitecture-net     
