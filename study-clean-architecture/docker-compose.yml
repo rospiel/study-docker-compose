@@ -32,3 +32,13 @@ services:
       - "8761:8761"
     networks:
       - studycleanarchitecture-net      
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:15.0.1
+    environment:
+      KEYCLOAK_USER: "admin"
+      KEYCLOAK_PASSWORD: "admin"
+    ports:
+    - "8080:8080"
+    networks:
+      - studycleanarchitecture-net    
