@@ -31,7 +31,7 @@ services:
     ports:
       - "8761:8761"
     networks:
-      - studycleanarchitecture-net      
+      - studycleanarchitecture-net
 
   keycloak:
     image: quay.io/keycloak/keycloak:15.0.1
@@ -39,6 +39,23 @@ services:
       KEYCLOAK_USER: "admin"
       KEYCLOAK_PASSWORD: "admin"
     ports:
-    - "8080:8080"
+      - "8080:8080"
     networks:
       - studycleanarchitecture-net    
+
+  ms-pessoa:
+    image: rospiel/ms-pessoa
+    command: ["/wait-for-it.sh", "-t", "30", "keycloak:8080",
+              "--", "java", "-jar", "api.jar"]
+    environment: 
+      TOKEN_CHAVE_PUBLICA: "${TOKEN_CHAVE_PUBLICA}"
+      TOKEN_MODELO_ALGORITMO: "${TOKEN_MODELO_ALGORITMO}"
+    ports:
+      - "8080"
+    networks:
+      - studycleanarchitecture-net
+    depends_on:
+      - pessoa-db
+      - config-server  
+      - eureka-server
+
