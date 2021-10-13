@@ -14,4 +14,14 @@ services:
     ports:
       - "5432:5432"
     networks:
-      - studycleanarchitecture-net     
+      - studycleanarchitecture-net
+
+  config-server:
+    image: rospiel/config-server
+    environment:
+      GITHUB_USER: "${GITHUB_USER}"
+      GITHUB_PASS: "${GITHUB_PASS}"
+    ports:
+      - "8888:8888"
+    networks:
+      - studycleanarchitecture-net         
