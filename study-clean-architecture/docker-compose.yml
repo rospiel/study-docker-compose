@@ -59,3 +59,14 @@ services:
       - config-server  
       - eureka-server
 
+  ms-folha-pagamento:
+    image: rospiel/ms-folha-pagamento
+    command: ["/wait-for-it.sh", "-t", "30", "keycloak:8080",
+              "--", "java", "-jar", "api.jar"]    
+    ports:
+      - "8080"
+    networks:
+      - studycleanarchitecture-net
+    depends_on:
+      - config-server  
+      - eureka-server  
