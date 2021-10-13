@@ -24,4 +24,11 @@ services:
     ports:
       - "8888:8888"
     networks:
-      - studycleanarchitecture-net         
+      - studycleanarchitecture-net
+
+  eureka-server:
+    image: rospiel/eureka-server
+    ports:
+      - "8761:8761"
+    networks:
+      - studycleanarchitecture-net      
