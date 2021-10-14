@@ -48,12 +48,14 @@ services:
     command: ["/wait-for-it.sh", "-t", "30", "keycloak:8080",
               "--", "java", "-jar", "api.jar"]
     environment: 
-      TOKEN_CHAVE_PUBLICA: "${TOKEN_CHAVE_PUBLICA}"
-      TOKEN_MODELO_ALGORITMO: "${TOKEN_MODELO_ALGORITMO}"
+      TOKEN_CHAVE_PUBLICA: ${TOKEN_CHAVE_PUBLICA}
+      TOKEN_MODELO_ALGORITMO: ${TOKEN_MODELO_ALGORITMO}
     ports:
       - "8080"
     networks:
       - studycleanarchitecture-net
+    deploy:
+      replicas: 2 
     depends_on:
       - pessoa-db
       - config-server  
@@ -67,6 +69,19 @@ services:
       - "8080"
     networks:
       - studycleanarchitecture-net
+    deploy:
+      replicas: 1  
     depends_on:
       - config-server  
       - eureka-server  
+
+  zuul-server:
+    image: rospiel/zuul-server
+    command: ["/wait-for-it.sh", "-t", "30", "keycloak:8080",
+              "--", "java", "-jar", "api.jar"]    
+    ports:
+      - "8765:8765"
+    networks:
+      - studycleanarchitecture-net
+    depends_on:
+      - eureka-server      
